@@ -10,8 +10,8 @@ function NavButton(props) {
     }
 
     return(
-        <div className="button-wrapper">
-            <h3 onClick={handleNav}>{props.text}</h3>
+        <div className="button-wrapper" onClick={handleNav}>
+            <h3>{props.text}</h3>
         </div>
     )
 }

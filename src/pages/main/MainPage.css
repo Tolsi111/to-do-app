@@ -1,0 +1,11 @@
+.main-container {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+  height: 80%;
+  width: 90%;
+  border-radius: 20px;
+  margin: 20px auto;
+  overflow: scroll;
+}
