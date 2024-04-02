@@ -1,0 +1,29 @@
+.footer-container {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  align-items: center;
+}
+
+.line-break {
+  border: 1px dotted var(--color-primary);
+  height: 0;
+  width: 70%;
+  margin-bottom: 10px;
+}
+.links {
+  height: 3rem;
+}
+
+.contact-link {
+  margin: 0 10px 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--color-primary);
+
+  &:hover {
+    color: var(--color-secondary);
+  }
+}
