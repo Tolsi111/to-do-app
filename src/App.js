@@ -1,12 +1,18 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import AddNotePage from "./pages/AddNotePage";
+import NoPage from "./pages/NoPage/NoPage";
 
 function App() {
   return (
-    <>
-      <h1>Awesome to-do app in the making</h1>
-      <img src={logo} className="App-logo" alt="logo" />
-    </>
+    <div className="app">
+      <Routes>
+        <Route path="/" element={<MainPage />}></Route>
+        <Route path="/add" element={<AddNotePage />}></Route>
+        <Route path="/*" element={<NoPage />}></Route>
+      </Routes>
+    </div>
   );
 }
 
