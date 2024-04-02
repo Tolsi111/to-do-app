@@ -28,13 +28,40 @@
   margin-top: auto;
 }
 
-.card-button {
+.card-button-edit {
   display: flex;
   height: 40px;
   width: 40px;
-  background-color: aquamarine;
   border-radius: 100%;
   justify-content: center;
   align-items: center;
   margin: 10px 0;
+  color: white;
+  background-color: #f8de22;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #f8de22;
+    background-color: white;
+    cursor: pointer;
+  }
+}
+
+.card-button-delete {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  color: white;
+  background-color: #c70039;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #c70039;
+    background-color: white;
+    cursor: pointer;
+  }
 }
