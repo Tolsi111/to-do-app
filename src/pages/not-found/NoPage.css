@@ -10,7 +10,6 @@
 
 p,
 h1 {
-  margin: 0;
   color: var(--color-primary);
   font-weight: var(--font-weight-md);
 }
@@ -27,8 +26,8 @@ h1 {
 
 .back-button {
   padding: 10px;
-  border: 5px solid var(--color-secondary);
-  color: var(--color-secondary);
+  border: 5px solid var(--color-primary);
+  color: var(--color-primary);
   border-radius: 5px;
   transition: all 0.3s;
   animation: wiggle 2.5s infinite;
@@ -38,8 +37,8 @@ h1 {
 
 .highlited {
   animation: none;
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
   cursor: pointer;
 }
 
