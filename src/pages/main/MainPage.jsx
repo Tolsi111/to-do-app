@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import Card from '../../components/Card/Card';
 import './MainPage.css'
+import { margin } from '@mui/system';
 
 const currentDate = new Date();
 
@@ -76,23 +77,27 @@ function MainPage() {
     const [searchTerm, setSearchTerm] = useState('');
 
     function sortMemos(arr, sort) {
-        // sort memos by date
+        // get sorted array of memos by date
         return sort? [...arr].sort((a, b) => new Date(a.props.date) - new Date(b.props.date) ) : [...arr].sort((a, b) => new Date(b.props.date) - new Date(a.props.date))
     }
 
     function handleKeyPress(event) {
         // Handle search
         if (event.key === 'Enter') {
-            if(event.target.value === '') {
-                // get back all memos
+            if(searchTerm === '') {
+                // Reset if search term is empty. Get back all memos
                 const reset = fetchedMemos.map((memoItem, index) => {
                     return <Card key={index} id={index} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
                 })
                 // maintain sort
                 setMemos(sortMemos(reset,newestFirst));
             } else {
+                // Get back all memos
+                const reset = fetchedMemos.map((memoItem, index) => {
+                    return <Card key={index} id={index} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
+                })
                 // filter memos
-                const filtered = memos.filter((item) => {
+                const filtered = reset.filter((item) => {
                     const memoTitle = item.props.title.toLowerCase();
                     const memoText = item.props.text.toLowerCase();
                     return memoTitle.includes(searchTerm.toLowerCase()) || memoText.includes(searchTerm.toLowerCase());
@@ -116,6 +121,7 @@ function MainPage() {
             })
         })
         //also delete from db
+        // careful how you handle delete. maybe make a call to refresh after each operation.
     }
 
     function handleEdit(memo) {
@@ -132,7 +138,8 @@ function MainPage() {
 
     return(
         <div className="main-container">
-            {memos}
+            {memos.length >= 0 && memos}
+            {memos.length === 0 && <div className='not-found'>No memos found, sadly.</div>}
             <div className='main-toolbox'>
                 <div>
                     <input className='main-search-box'
