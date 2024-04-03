@@ -75,27 +75,36 @@ function MainPage() {
     const [newestFirst, setNewestFirst] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
-    function handleKeyPress(event) {// IMPROVE THIS
+    function sortMemos(arr, sort) {
+        // sort memos by date
+        return sort? [...arr].sort((a, b) => new Date(a.props.date) - new Date(b.props.date) ) : [...arr].sort((a, b) => new Date(b.props.date) - new Date(a.props.date))
+    }
+
+    function handleKeyPress(event) {
+        // Handle search
         if (event.key === 'Enter') {
-            console.log('SEARCH');
             if(event.target.value === '') {
-                setMemos(fetchedMemos.map((memoItem, index) => {
+                // get back all memos
+                const reset = fetchedMemos.map((memoItem, index) => {
                     return <Card key={index} id={index} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
-                }));
+                })
+                // maintain sort
+                setMemos(sortMemos(reset,newestFirst));
             } else {
-                console.log(searchTerm);
-                setMemos(memos.filter((item) => {
+                // filter memos
+                const filtered = memos.filter((item) => {
                     const memoTitle = item.props.title.toLowerCase();
                     const memoText = item.props.text.toLowerCase();
                     return memoTitle.includes(searchTerm.toLowerCase()) || memoText.includes(searchTerm.toLowerCase());
-                }));
+                })
+                // maintain sort
+                setMemos(sortMemos(filtered,newestFirst));
             }
           }
     }
 
     function handleChecboxChange() {
-        const sort = !newestFirst;
-        setMemos(sort? [...memos].sort((a, b) => new Date(a.props.date) - new Date(b.props.date) ) : [...memos].sort((a, b) => new Date(b.props.date) - new Date(a.props.date) ))
+        setMemos(sortMemos(memos,!newestFirst))
         setNewestFirst(!newestFirst);
 
     }
