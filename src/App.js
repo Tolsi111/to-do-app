@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import MainPage from "./pages/main/MainPage";
-import AddNotePage from "./pages/AddNotePage";
+import AddNotePage from "./pages/add-note/AddNotePage";
 import NoPage from "./pages/not-found/NoPage";
 import Header from "./components/layout/Header/Header";
 import Footer from "./components/layout/Footer/Footer";

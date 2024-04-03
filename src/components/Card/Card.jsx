@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 
 function Card(props) {
-    const [isEditMode, setIsEditMode] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(props.inputForm);
     const [title, setTitle] = useState(props.title);
     const [text, setText] = useState(props.text);
 
@@ -20,6 +20,11 @@ function Card(props) {
 
     function handleConfirm() {
         setIsEditMode(false);
+        props.onSave({
+            id: props.id,
+            title: title,
+            text: text
+        });
         // persist to db
     }
 

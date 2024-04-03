@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../../components/Card/Card';
 import './MainPage.css'
+import { func } from 'prop-types';
 
 
 const fetchedMemos = [
@@ -65,9 +66,14 @@ function MainPage() {
         //also delete from db
     }
 
+    function handleEdit(memo) {
+        console.log(memo);
+        console.log("EDIT");
+    }
+
     useEffect(() => {
         setMemos(fetchedMemos.map((memoItem, index) => {
-            return <Card key={index} id={index} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo}/>
+            return <Card key={index} id={index} inputForm={false} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
         }))
     }, [])
 

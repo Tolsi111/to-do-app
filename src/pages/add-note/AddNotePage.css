@@ -1,0 +1,12 @@
+.main-add-note-container {
+  background-image: url("https://www.transparenttextures.com/patterns/notebook.png");
+  background-color: var(--color-background);
+  padding: 5px 10px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  height: 390px;
+  width: 300px;
+  margin: auto;
+  border-radius: 10px;
+}
