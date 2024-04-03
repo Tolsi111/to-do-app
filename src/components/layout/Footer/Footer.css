@@ -3,6 +3,7 @@
   flex-flow: column;
   width: 100%;
   align-items: center;
+  margin-top: auto;
 }
 
 .line-break {

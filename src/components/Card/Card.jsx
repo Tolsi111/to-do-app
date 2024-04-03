@@ -1,23 +1,45 @@
+import React, { useState } from 'react';
 import './Card.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
 
-function Card() {
+function Card(props) {
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [title, setTitle] = useState(props.title);
+    const [text, setText] = useState(props.text);
 
     function handleEdit() {
+        setIsEditMode(true);
         console.log("edit");
     }
 
     function handleDelete() {
-        console.log("delete");
+        props.onDelete(props.id);
+    }
+
+    function handleConfirm() {
+        setIsEditMode(false);
+        // persist to db
     }
 
     return(
         <div className="card-wrapper">
-            <div className='card-title'>title</div>
-            <div className='card-text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            {!isEditMode && <h3 className='card-title'>{title}</h3>}
+            {isEditMode && 
+                <input name={'title'} className='card-title'
+                        defaultValue={title}
+                        onChange={(e) => setTitle(e.target.value)}/>
+                }
+            {!isEditMode && <div className='card-text'>{text}</div>}
+            {isEditMode && 
+                <textarea name={'text'} className='card-text'
+                        defaultValue={text}
+                        onChange={(e) => setText(e.target.value)}/>
+            }
             <div className='card-toolbox'>
-                <div className='card-button-edit' onClick={handleEdit}><EditIcon/></div>
+                {!isEditMode && <div className='card-button-edit' onClick={handleEdit}><EditIcon/></div>}
+                {isEditMode && <div className='card-button-confirm' onClick={handleConfirm}><CheckIcon/></div>}
                 <div className='card-button-delete' onClick={handleDelete}><DeleteIcon/></div>
             </div>
         </div>

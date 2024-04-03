@@ -12,13 +12,14 @@
 }
 
 .card-title {
-  background-color: yellow;
   margin: 10px 0;
 }
 
 .card-text {
-  background-color: aquamarine;
+  display: flex;
+  padding: 0 15px;
   overflow: scroll;
+  flex-grow: 1;
 }
 
 .card-toolbox {
@@ -42,6 +43,25 @@
 
   &:hover {
     color: #f8de22;
+    background-color: white;
+    cursor: pointer;
+  }
+}
+
+.card-button-confirm {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  color: white;
+  background-color: #74e291;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #74e291;
     background-color: white;
     cursor: pointer;
   }
