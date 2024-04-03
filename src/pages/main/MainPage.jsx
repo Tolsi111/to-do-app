@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../../components/Card/Card';
 import './MainPage.css'
-import { func } from 'prop-types';
-
 
 const fetchedMemos = [
     {
@@ -14,7 +12,7 @@ const fetchedMemos = [
     },
     {
         title: "Do some reading",
-        text: "Remember to stay sharp by reading. It can be enything, just stop playing on the computer all day. "
+        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. "
     },
     {
         title: "Lorem impsum",
@@ -25,7 +23,7 @@ const fetchedMemos = [
     },
     {
         title: "Do some reading",
-        text: "Remember to stay sharp by reading. It can be enything, just stop playing on the computer all day. "
+        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. "
     },
     {
         title: "Lorem impsum",
@@ -36,7 +34,7 @@ const fetchedMemos = [
     },
     {
         title: "Do some reading",
-        text: "Remember to stay sharp by reading. It can be enything, just stop playing on the computer all day. "
+        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. "
     },
     {
         title: "Lorem impsum",
@@ -47,7 +45,7 @@ const fetchedMemos = [
     },
     {
         title: "Do some reading",
-        text: "Remember to stay sharp by reading. It can be enything, just stop playing on the computer all day. "
+        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. "
     },
     
     
@@ -56,6 +54,26 @@ const fetchedMemos = [
 function MainPage() {
 
     const [memos, setMemos] = useState([]);
+    const [newestFirst, setNewestFirst] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    function handleKeyPress(event) {// IMPROVE THIS
+        if (event.key === 'Enter') {
+            console.log('SEARCH');
+            if(event.target.value === '') {
+                setMemos(fetchedMemos.map((memoItem, index) => {
+                    return <Card key={index} id={index} inputForm={false} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
+                }));
+            } else {
+                console.log(searchTerm);
+                setMemos(memos.filter((item) => {
+                    const memoTitle = item.props.title.toLowerCase();
+                    const memoText = item.props.text.toLowerCase();
+                    return memoTitle.includes(searchTerm.toLowerCase()) || memoText.includes(searchTerm.toLowerCase());
+                }));
+            }
+          }
+    }
 
     function onDeleteMemo(id) {
         setMemos(prevState => {
@@ -80,6 +98,24 @@ function MainPage() {
     return(
         <div className="main-container">
             {memos}
+            <div className='main-toolbox'>
+                <div>
+                    <input className='main-search-box'
+                    placeholder='search'
+                    onKeyDown={handleKeyPress}
+                    onChange={(e) => {setSearchTerm(e.target.value)}}/>
+                </div>
+                <div className='main-sort-box'>
+                    <label>
+                        Newest first
+                        <input
+                        type="checkbox"
+                        checked={newestFirst}
+                        onChange={(e) => {setNewestFirst(!newestFirst)}}
+                        />
+                    </label>
+                </div>
+            </div>
         </div>
     )
 }
