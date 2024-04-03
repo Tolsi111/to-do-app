@@ -5,3 +5,5 @@ A slighty different application for creating, reading, updating and deleting tas
 # An app from my portfolio similar to this, deployed with firebase:
 
 https://github.com/Tolsi111/Memo-App
+
+## Time spent on this: ~4 hours
