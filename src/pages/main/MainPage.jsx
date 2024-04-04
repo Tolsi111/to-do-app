@@ -1,53 +1,70 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import Card from '../../components/Card/Card';
 import './MainPage.css'
-import { func } from 'prop-types';
+import { margin } from '@mui/system';
 
+const currentDate = new Date();
 
 const fetchedMemos = [
     {
-        title: "Lorem impsum",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
-    {
-        title: "Go to gym",
-        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:["
+        title: "Lorem impsum 1",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        date: currentDate.setHours(currentDate.getHours() + 1)
     },
     {
-        title: "Do some reading",
-        text: "Remember to stay sharp by reading. It can be enything, just stop playing on the computer all day. "
+        title: "Go to gym 2",
+        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:[",
+        date: currentDate.setHours(currentDate.getHours() + 2)
     },
     {
-        title: "Lorem impsum",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
-    {
-        title: "Go to gym",
-        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:["
+        title: "Do some reading 3",
+        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. ",
+        date: currentDate.setHours(currentDate.getHours() + 3)
     },
     {
-        title: "Do some reading",
-        text: "Remember to stay sharp by reading. It can be enything, just stop playing on the computer all day. "
+        title: "Lorem impsum 4",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        date: currentDate.setHours(currentDate.getHours() + 4)
     },
     {
-        title: "Lorem impsum",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
-    {
-        title: "Go to gym",
-        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:["
+        title: "Go to gym 5",
+        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:[",
+        date: currentDate.setHours(currentDate.getHours() + 5)
     },
     {
-        title: "Do some reading",
-        text: "Remember to stay sharp by reading. It can be enything, just stop playing on the computer all day. "
+        title: "Do some reading 6",
+        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. ",
+        date: currentDate.setHours(currentDate.getHours() + 6)
     },
     {
-        title: "Lorem impsum",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
-    {
-        title: "Go to gym",
-        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:["
+        title: "Lorem impsum 7",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        date: currentDate.setHours(currentDate.getHours() + 7)
     },
     {
-        title: "Do some reading",
-        text: "Remember to stay sharp by reading. It can be enything, just stop playing on the computer all day. "
+        title: "Go to gym 8",
+        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:[",
+        date: currentDate.setHours(currentDate.getHours() + 8)
+    },
+    {
+        title: "Do some reading 9",
+        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. ",
+        date: currentDate.setHours(currentDate.getHours() + 9)
+    },
+    {
+        title: "Lorem impsum 10",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        date: currentDate.setHours(currentDate.getHours() + 10)
+    },
+    {
+        title: "Go to gym 11",
+        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:[",
+        date: currentDate.setHours(currentDate.getHours() + 11)
+    },
+    {
+        title: "Do some reading 12",
+        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. ",
+        date: currentDate.setHours(currentDate.getHours() + 12)
     },
     
     
@@ -56,6 +73,46 @@ const fetchedMemos = [
 function MainPage() {
 
     const [memos, setMemos] = useState([]);
+    const [newestFirst, setNewestFirst] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    function sortMemos(arr, sort) {
+        // get sorted array of memos by date
+        return sort? [...arr].sort((a, b) => new Date(a.props.date) - new Date(b.props.date) ) : [...arr].sort((a, b) => new Date(b.props.date) - new Date(a.props.date))
+    }
+
+    function handleKeyPress(event) {
+        // Handle search
+        if (event.key === 'Enter') {
+            if(searchTerm === '') {
+                // Reset if search term is empty. Get back all memos
+                const reset = fetchedMemos.map((memoItem, index) => {
+                    return <Card key={index} id={index} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
+                })
+                // maintain sort
+                setMemos(sortMemos(reset,newestFirst));
+            } else {
+                // Get back all memos
+                const reset = fetchedMemos.map((memoItem, index) => {
+                    return <Card key={index} id={index} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
+                })
+                // filter memos
+                const filtered = reset.filter((item) => {
+                    const memoTitle = item.props.title.toLowerCase();
+                    const memoText = item.props.text.toLowerCase();
+                    return memoTitle.includes(searchTerm.toLowerCase()) || memoText.includes(searchTerm.toLowerCase());
+                })
+                // maintain sort
+                setMemos(sortMemos(filtered,newestFirst));
+            }
+          }
+    }
+
+    function handleChecboxChange() {
+        setMemos(sortMemos(memos,!newestFirst))
+        setNewestFirst(!newestFirst);
+
+    }
 
     function onDeleteMemo(id) {
         setMemos(prevState => {
@@ -64,6 +121,7 @@ function MainPage() {
             })
         })
         //also delete from db
+        // careful how you handle delete. maybe make a call to refresh after each operation.
     }
 
     function handleEdit(memo) {
@@ -73,13 +131,33 @@ function MainPage() {
 
     useEffect(() => {
         setMemos(fetchedMemos.map((memoItem, index) => {
-            return <Card key={index} id={index} inputForm={false} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
+            return <Card key={index} id={index} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
         }))
     }, [])
 
+
     return(
         <div className="main-container">
-            {memos}
+            {memos.length >= 0 && memos}
+            {memos.length === 0 && <div className='not-found'>No memos found, sadly.</div>}
+            <div className='main-toolbox'>
+                <div>
+                    <input className='main-search-box'
+                    placeholder='search'
+                    onKeyDown={handleKeyPress}
+                    onChange={(e) => {setSearchTerm(e.target.value)}}/>
+                </div>
+                <div className='main-sort-box'>
+                    <label>
+                        Newest first
+                        <input
+                        type="checkbox"
+                        checked={newestFirst}
+                        onChange={handleChecboxChange}
+                        />
+                    </label>
+                </div>
+            </div>
         </div>
     )
 }
