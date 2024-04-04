@@ -1,13 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import StartFirebase from "../../config/firebase-config";
-import {ref, remove} from "firebase/database";
 import './AddNotePage.css'
 import Card from '../../components/Card/Card';
 
 function AddNotePage() {
 
     const navigate = useNavigate();
-    const db = StartFirebase();
 
     function goBack(id) {
         navigate('/');
