@@ -6,9 +6,8 @@ A slighty different application for creating, reading, updating and deleting tas
 
 https://github.com/Tolsi111/Memo-App
 
-## Time spent on this:
+## Time spent on this: 10 hours
 
 UI structure: ~4 hours
 UI flows: ~4 hours
-API integration:
-Deploy:
+API integration: + deploy: ~2 hours
