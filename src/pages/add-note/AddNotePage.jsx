@@ -15,9 +15,6 @@ function AddNotePage() {
 
     async function handleSave(memo) {
         //save memo
-        //maybe force refresh after
-        memo.id = 0;
-        console.log(memo);
         const response = await fetch('https://to-do-app-619a8-default-rtdb.europe-west1.firebasedatabase.app/memos.json', {
             method: 'POST',
             body: JSON.stringify(memo),
@@ -26,7 +23,6 @@ function AddNotePage() {
             }
         })
         const data = await response.json();
-        console.log(data)
         navigate('/');
         window.location.reload();
     }

@@ -11,7 +11,6 @@ function Card(props) {
 
     function handleEdit() {
         setIsEditMode(true);
-        console.log("edit");
     }
 
     function handleDelete() {
@@ -26,7 +25,6 @@ function Card(props) {
             text: text,
             date: new Date()
         });
-        // persist to db
     }
 
     return(

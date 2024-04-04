@@ -8,7 +8,7 @@ function MainPage() {
 
     const [initialMemos, setInitialMemos] = useState([]);
     const [memos, setMemos] = useState([]);
-    const [newestFirst, setNewestFirst] = useState(true);
+    const [lastModified, setLastModified] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
     const db = StartFirebase();
@@ -23,7 +23,7 @@ function MainPage() {
         if (event.key === 'Enter') {
             if(searchTerm === '') {
                 // clear search, maintain sort
-                setMemos(sortMemos(initialMemos,newestFirst));
+                setMemos(sortMemos(initialMemos,lastModified));
             } else {
                 // filter memos
                 const filtered = initialMemos.filter((item) => {
@@ -32,30 +32,48 @@ function MainPage() {
                     return memoTitle.includes(searchTerm.toLowerCase()) || memoText.includes(searchTerm.toLowerCase());
                 })
                 // maintain sort
-                setMemos(sortMemos(filtered,newestFirst));
+                setMemos(sortMemos(filtered,lastModified));
             }
           }
     }
 
     function handleChecboxChange() {
-        setMemos(sortMemos(memos,!newestFirst))
-        setNewestFirst(!newestFirst);
+        setMemos(sortMemos(memos,!lastModified))
+        setLastModified(!lastModified);
 
     }
 
     function onDeleteMemo(id) {
-        setMemos(prevState => {
-            return prevState.filter((memoItem) => {
-                return memoItem.props.id !== id;
+        const memoRef = ref(db, '/memos/' + id);
+        remove(memoRef).then(() => { 
+            // if success, remove from the UI too
+            setMemos(prevState => {
+                return prevState.filter((memoItem) => {
+                    return memoItem.id !== id;
+                })
             })
-        })
-        //also delete from db
-        // careful how you handle delete. maybe make a call to refresh after each operation.
+        }).catch((err) => {
+            console.log(err)
+        });
+        
     }
 
-    function handleEdit(memo) {
-        console.log(memo);
-        console.log("EDIT");
+    async function handleEdit(memo) {
+        // remove by id
+        const memoRef = ref(db, '/memos/' + memo.id);
+        remove(memoRef).catch((err) => {
+            console.log(err)
+        });
+        // create new
+        const response = await fetch('https://to-do-app-619a8-default-rtdb.europe-west1.firebasedatabase.app/memos.json', {
+            method: 'POST',
+            body: JSON.stringify(memo),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const data = await response.json();
+        window.location.reload();
     }
 
     useEffect(() => {
@@ -63,7 +81,6 @@ function MainPage() {
             // fetch
             const response = await fetch('https://to-do-app-619a8-default-rtdb.europe-west1.firebasedatabase.app/memos.json');
             const responseData = await response.json();
-
             const loadedMemos = [];
             // parse
             for(const key in responseData) {
@@ -74,7 +91,6 @@ function MainPage() {
                     date: responseData[key].date
                 })
             }
-            console.log(loadedMemos);
             setInitialMemos(loadedMemos);
             setMemos(loadedMemos);
         }
@@ -100,10 +116,10 @@ function MainPage() {
                 </div>
                 <div className='main-sort-box'>
                     <label>
-                        Newest first
+                        Last modified
                         <input
                         type="checkbox"
-                        checked={newestFirst}
+                        checked={lastModified}
                         onChange={handleChecboxChange}
                         />
                     </label>

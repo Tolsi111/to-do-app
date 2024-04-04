@@ -9,6 +9,8 @@ function StartFirebase() {
     storageBucket: "to-do-app-619a8.appspot.com",
     messagingSenderId: "700769702998",
     appId: "1:700769702998:web:7b7ae82183c2693b4c97f7",
+    databaseURL:
+      "https://to-do-app-619a8-default-rtdb.europe-west1.firebasedatabase.app",
   };
 
   // Initialize Firebase
