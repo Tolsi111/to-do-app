@@ -23,7 +23,8 @@ function Card(props) {
         props.onSave({
             id: props.id,
             title: title,
-            text: text
+            text: text,
+            date: new Date()
         });
         // persist to db
     }
