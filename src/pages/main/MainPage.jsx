@@ -1,144 +1,111 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
+import StartFirebase from "../../config/firebase-config";
+import {ref, remove} from "firebase/database";
 import Card from '../../components/Card/Card';
 import './MainPage.css'
-import { margin } from '@mui/system';
-
-const currentDate = new Date();
-
-const fetchedMemos = [
-    {
-        title: "Lorem impsum 1",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        date: currentDate.setHours(currentDate.getHours() + 1)
-    },
-    {
-        title: "Go to gym 2",
-        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:[",
-        date: currentDate.setHours(currentDate.getHours() + 2)
-    },
-    {
-        title: "Do some reading 3",
-        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. ",
-        date: currentDate.setHours(currentDate.getHours() + 3)
-    },
-    {
-        title: "Lorem impsum 4",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        date: currentDate.setHours(currentDate.getHours() + 4)
-    },
-    {
-        title: "Go to gym 5",
-        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:[",
-        date: currentDate.setHours(currentDate.getHours() + 5)
-    },
-    {
-        title: "Do some reading 6",
-        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. ",
-        date: currentDate.setHours(currentDate.getHours() + 6)
-    },
-    {
-        title: "Lorem impsum 7",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        date: currentDate.setHours(currentDate.getHours() + 7)
-    },
-    {
-        title: "Go to gym 8",
-        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:[",
-        date: currentDate.setHours(currentDate.getHours() + 8)
-    },
-    {
-        title: "Do some reading 9",
-        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. ",
-        date: currentDate.setHours(currentDate.getHours() + 9)
-    },
-    {
-        title: "Lorem impsum 10",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        date: currentDate.setHours(currentDate.getHours() + 10)
-    },
-    {
-        title: "Go to gym 11",
-        text: "Haven't had a leg day in a long while, ey? Unless you prefer chicken legs, go out there and do some lifting or else. >:[",
-        date: currentDate.setHours(currentDate.getHours() + 11)
-    },
-    {
-        title: "Do some reading 12",
-        text: "Remember to stay sharp by reading. It can be anything, just stop playing on the computer all day. ",
-        date: currentDate.setHours(currentDate.getHours() + 12)
-    },
-    
-    
-]
 
 function MainPage() {
 
+    const [initialMemos, setInitialMemos] = useState([]);
     const [memos, setMemos] = useState([]);
-    const [newestFirst, setNewestFirst] = useState(true);
+    const [lastModified, setLastModified] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+
+    const db = StartFirebase();
 
     function sortMemos(arr, sort) {
         // get sorted array of memos by date
-        return sort? [...arr].sort((a, b) => new Date(a.props.date) - new Date(b.props.date) ) : [...arr].sort((a, b) => new Date(b.props.date) - new Date(a.props.date))
+        return sort? [...arr].sort((a, b) => new Date(a.date) - new Date(b.date) ) : [...arr].sort((a, b) => new Date(b.date) - new Date(a.date))
     }
 
     function handleKeyPress(event) {
         // Handle search
         if (event.key === 'Enter') {
             if(searchTerm === '') {
-                // Reset if search term is empty. Get back all memos
-                const reset = fetchedMemos.map((memoItem, index) => {
-                    return <Card key={index} id={index} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
-                })
-                // maintain sort
-                setMemos(sortMemos(reset,newestFirst));
+                // clear search, maintain sort
+                setMemos(sortMemos(initialMemos,lastModified));
             } else {
-                // Get back all memos
-                const reset = fetchedMemos.map((memoItem, index) => {
-                    return <Card key={index} id={index} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
-                })
                 // filter memos
-                const filtered = reset.filter((item) => {
-                    const memoTitle = item.props.title.toLowerCase();
-                    const memoText = item.props.text.toLowerCase();
+                const filtered = initialMemos.filter((item) => {
+                    const memoTitle = item.title.toLowerCase();
+                    const memoText = item.text.toLowerCase();
                     return memoTitle.includes(searchTerm.toLowerCase()) || memoText.includes(searchTerm.toLowerCase());
                 })
                 // maintain sort
-                setMemos(sortMemos(filtered,newestFirst));
+                setMemos(sortMemos(filtered,lastModified));
             }
           }
     }
 
     function handleChecboxChange() {
-        setMemos(sortMemos(memos,!newestFirst))
-        setNewestFirst(!newestFirst);
+        setMemos(sortMemos(memos,!lastModified))
+        setLastModified(!lastModified);
 
     }
 
     function onDeleteMemo(id) {
-        setMemos(prevState => {
-            return prevState.filter((memoItem) => {
-                return memoItem.props.id !== id;
+        const memoRef = ref(db, '/memos/' + id);
+        remove(memoRef).then(() => { 
+            // if success, remove from the UI too
+            setMemos(prevState => {
+                return prevState.filter((memoItem) => {
+                    return memoItem.id !== id;
+                })
             })
-        })
-        //also delete from db
-        // careful how you handle delete. maybe make a call to refresh after each operation.
+        }).catch((err) => {
+            console.log(err)
+        });
+        
     }
 
-    function handleEdit(memo) {
-        console.log(memo);
-        console.log("EDIT");
+    async function handleEdit(memo) {
+        // remove by id
+        const memoRef = ref(db, '/memos/' + memo.id);
+        remove(memoRef).catch((err) => {
+            console.log(err)
+        });
+        // create new
+        const response = await fetch('https://to-do-app-619a8-default-rtdb.europe-west1.firebasedatabase.app/memos.json', {
+            method: 'POST',
+            body: JSON.stringify(memo),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const data = await response.json();
+        window.location.reload();
     }
 
     useEffect(() => {
-        setMemos(fetchedMemos.map((memoItem, index) => {
-            return <Card key={index} id={index} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
-        }))
+        async function getMemos() {
+            // fetch
+            const response = await fetch('https://to-do-app-619a8-default-rtdb.europe-west1.firebasedatabase.app/memos.json');
+            const responseData = await response.json();
+            const loadedMemos = [];
+            // parse
+            for(const key in responseData) {
+                loadedMemos.push({
+                    id: key,
+                    title: responseData[key].title,
+                    text: responseData[key].text,
+                    date: responseData[key].date
+                })
+            }
+            setInitialMemos(loadedMemos);
+            setMemos(loadedMemos);
+        }
+
+        getMemos().catch((err) => {
+            console.log(err);
+        })
     }, [])
 
 
     return(
         <div className="main-container">
-            {memos.length >= 0 && memos}
+            {memos.length >= 0 && memos.map((memoItem) => {
+                    return <Card key={memoItem.id} id={memoItem.id} inputForm={false} date={memoItem.date} title={memoItem.title} text={memoItem.text} onDelete={onDeleteMemo} onSave={handleEdit}/>
+                })}
             {memos.length === 0 && <div className='not-found'>No memos found, sadly.</div>}
             <div className='main-toolbox'>
                 <div>
@@ -149,10 +116,10 @@ function MainPage() {
                 </div>
                 <div className='main-sort-box'>
                     <label>
-                        Newest first
+                        Last modified
                         <input
                         type="checkbox"
-                        checked={newestFirst}
+                        checked={lastModified}
                         onChange={handleChecboxChange}
                         />
                     </label>
