@@ -8,6 +8,6 @@ https://github.com/Tolsi111/Memo-App
 
 ## Time spent on this: 10 hours
 
-UI structure: ~4 hours
-UI flows: ~4 hours
-API integration: + deploy: ~2 hours
+UI components: ~4 hours
+UI flows + API integration: ~5 hours
+Deploy: ~2 hours
